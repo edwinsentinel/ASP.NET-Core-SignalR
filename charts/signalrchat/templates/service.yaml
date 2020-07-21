@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "signalrchat.fullname" . }}
+  labels:
+    app: {{ template "signalrchat.name" . }}
+    chart: {{ template "signalrchat.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "signalrchat.name" . }}
+    release: {{ .Release.Name }}
